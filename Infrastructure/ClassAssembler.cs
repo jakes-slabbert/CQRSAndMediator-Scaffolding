@@ -108,6 +108,30 @@ namespace CQRSAndMediator.Scaffolding.Infrastructure
 
         }
 
+        public IWithInheritance AddGetSetProperty(string propType, string name, SyntaxKind accessModifier)
+        {
+            var accessorList = SyntaxFactory.SingletonList<AccessorDeclarationSyntax>(
+                                    SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
+                                        .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                                );
+
+            accessorList.Add(SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
+                                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)));
+
+            var propertyDeclaration = SyntaxFactory
+                .PropertyDeclaration(SyntaxFactory.ParseTypeName(propType), name)
+                .AddModifiers(SyntaxFactory.Token(accessModifier))
+                .WithAccessorList(
+                    SyntaxFactory.AccessorList(
+                        accessorList
+                    )
+                );
+
+            _class = _class.AddMembers(propertyDeclaration);
+
+            return this;
+        }
+
         public IWithInheritance AddStartupConfigureServices()
         {
             var statements = new List<StatementSyntax>

@@ -11,6 +11,7 @@ namespace CQRSAndMediator.Scaffolding.Infrastructure
         IWithInheritance ImplementMediatorHandlerInheritance(string responseTypeName, string requestTypeName);
         IWithInheritance AddStartupConstructor();
         IWithInheritance AddGetProperty(string propType, string name, SyntaxKind accessModifier);
+        IWithInheritance AddGetSetProperty(string propType, string name, SyntaxKind accessModifier);
         IWithInheritance AddStartupConfigureServices();
         IWithInheritance AddStartupConfigure();
         IWithInheritance AddMethod(SyntaxToken[] modifiers,
